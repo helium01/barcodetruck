@@ -2,6 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\TrukController;
+use App\Http\Controllers\JenisController;
+use App\Http\Controllers\PermintaanController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,5 +18,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('awal');
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::resource('admin/truk', TrukController::class);
+
+Route::resource('admin/jenis', JenisController::class);
+
+Route::resource('admin/permintaan', PermintaanController::class);
