@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\truk;
+use App\Models\jenis;
 use Illuminate\Http\Request;
 
 class TrukController extends Controller
@@ -14,11 +15,20 @@ class TrukController extends Controller
 
         return view('admin.truk.index', compact('truks'));
     }
+    public function indexqrcode($id)
+    {
+        // Tampilkan semua jenis
+        $jeniss = truk::join('jeniss','jeniss.id','=','truks.id_jenis')->where('jeniss.id',$id);
+
+        return view('admin.truk.qrcode', compact('jeniss'));
+    }
+
 
     public function create()
     {
+        $jenis=jenis::all();
         // Tampilkan formulir tambah truk
-        return view('admin.truk.create');
+        return view('admin.truk.create',compact('jenis'));
     }
 
     public function store(Request $request)
@@ -34,7 +44,7 @@ class TrukController extends Controller
         Truk::create($request->all());
 
         // Redirect dengan pesan sukses
-        return redirect()->route('admin.truk.index')->with('success', 'Truk berhasil ditambahkan');
+        return redirect('/admin/truk')->with('success', 'Truk berhasil ditambahkan');
     }
 
     public function show($id)
@@ -42,7 +52,7 @@ class TrukController extends Controller
         // Tampilkan detail truk berdasarkan ID
         $truk = Truk::find($id);
 
-        return view('admin.truk.show', compact('truk'));
+        return view('admin.truk.edit', compact('truk'));
     }
 
     public function edit($id)
@@ -66,7 +76,7 @@ class TrukController extends Controller
         Truk::where('id', $id)->update($request->except('_token', '_method'));
 
         // Redirect dengan pesan sukses
-        return redirect()->route('admin.truk.index')->with('success', 'Truk berhasil diperbarui');
+        return redirect('/admin/truk')->with('success', 'Truk berhasil diperbarui');
     }
 
     public function destroy($id)
@@ -75,6 +85,6 @@ class TrukController extends Controller
         Truk::destroy($id);
 
         // Redirect dengan pesan sukses
-        return redirect()->route('admin.truk.index')->with('success', 'Truk berhasil dihapus');
+        return redirect('/admin/truk')->with('success', 'Truk berhasil dihapus');
     }
 }

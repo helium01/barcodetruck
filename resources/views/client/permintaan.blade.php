@@ -17,46 +17,91 @@
                   </ul>
                 </nav>
               </div>
-              <div class="row">
-                <div class="col-md-4 stretch-card grid-margin">
-                  <div class="card bg-gradient-danger card-img-holder text-white">
-                    <div class="card-body">
-                      <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                      <h4 class="font-weight-normal mb-3">Weekly Sales <i class="mdi mdi-chart-line mdi-24px float-right"></i>
-                      </h4>
-                      <h2 class="mb-5">$ 15,0000</h2>
-                      <h6 class="card-text">Increased by 60%</h6>
-                    </div>
+              <div class="container mt-5">
+                <h2>Form Permintaan</h2>
+                
+                <!-- Formulir dengan Bootstrap -->
+                <form method="post" action="/admin/permintaan">
+                  @csrf <!-- Token CSRF Laravel -->
+                  
+                  <!-- Input Tanggal -->
+                  <div class="form-group">
+                    <label for="tanggal">Tanggal:</label>
+                    <input type="date" class="form-control" id="tanggal" name="tanggal" required>
                   </div>
-                </div>
-                <div class="col-md-4 stretch-card grid-margin">
-                  <div class="card bg-gradient-info card-img-holder text-white">
-                    <div class="card-body">
-                      <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                      <h4 class="font-weight-normal mb-3">Weekly Orders <i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
-                      </h4>
-                      <h2 class="mb-5">45,6334</h2>
-                      <h6 class="card-text">Decreased by 10%</h6>
-                    </div>
+                  
+                  <!-- Input Kode Unit -->
+                  <div class="form-group">
+                    <label for="kode_unit">Kode Unit:</label>
+                <select class="form-control" id="id_jenis" name="kode_unit" required>
+                    @foreach($unit as $j)
+                        <option value="{{ $j->id }}">{{ $j->nama_unit }}</option>
+                    @endforeach
+                </select>
                   </div>
-                </div>
-                <div class="col-md-4 stretch-card grid-margin">
-                  <div class="card bg-gradient-success card-img-holder text-white">
-                    <div class="card-body">
-                      <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                      <h4 class="font-weight-normal mb-3">Visitors Online <i class="mdi mdi-diamond mdi-24px float-right"></i>
-                      </h4>
-                      <h2 class="mb-5">95,5741</h2>
-                      <h6 class="card-text">Increased by 5%</h6>
-                    </div>
+              
+                  <!-- Input Afdeling -->
+                  <div class="form-group">
+                    <label for="afdeling">Afdeling:</label>
+                    <input type="text" class="form-control" id="afdeling" name="afdeling" required>
                   </div>
-                </div>
+              
+                  <!-- Input KM Awal -->
+                  <div class="form-group">
+                    <label for="km_awal">KM Awal:</label>
+                    <input type="number" class="form-control" id="km_awal" name="km_awal" required>
+                  </div>
+              
+                  <!-- Input KM Akhir -->
+                  <div class="form-group">
+                    <label for="km_akhir">KM Akhir:</label>
+                    <input type="number" class="form-control" id="km_akhir" name="km_akhir" required>
+                  </div>
+              
+                  <!-- Input Selisih -->
+                  <div class="form-group">
+                    <label for="selisih">Selisih:</label>
+                    <input type="number" class="form-control" id="selisih" name="selisih" required>
+                  </div>
+              
+                  <!-- Input Rasio -->
+                  <div class="form-group">
+                    <label for="rasio">Rasio:</label>
+                    <input type="number" class="form-control" id="rasio" name="rasio" required>
+                    <input type="hidden" class="form-control" id="rasio" name="status" required value="pending">
+                  </div>
+              
+                  <!-- Tombol Submit -->
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
               </div>
              
               
             </div>
             <!-- content-wrapper ends -->
             <!-- partial:partials/_footer.html -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            <script>
+              $(document).ready(function() {
+                  // Fungsi untuk menghitung selisih
+                  function hitungSelisih() {
+                      var kmAwal = parseFloat($('#km_awal').val()) || 0;
+                      var kmAkhir = parseFloat($('#km_akhir').val()) || 0;
+  
+                      // Hitung selisih dan atur nilai ke input Selisih
+                      var selisih = kmAkhir - kmAwal;
+                      if (selisih<=0){
+                        selisih=0;
+                      }
+                      $('#selisih').val(selisih);
+                  }
+  
+                  // Panggil fungsi hitungSelisih saat nilai KM Awal atau KM Akhir berubah
+                  $('#km_awal, #km_akhir').on('input', function() {
+                      hitungSelisih();
+                  });
+              });
+          </script>
             
 @endsection
       

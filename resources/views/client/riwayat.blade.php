@@ -1,4 +1,4 @@
-@extends('admin.layout')
+@extends('client.layout')
 @section('content')
         <!-- partial -->
         <div class="main-panel">
@@ -33,7 +33,6 @@
                           <th>Selisih</th>
                           <th>Rasio</th>
                           <th>status</th>
-                          <th>acion</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -50,7 +49,6 @@
                                 <td>
                                   {{ $permintaan->status }}
                                 </td>
-                                <td><a href="/admin/permintaan/qrcode/{{$permintaan->id}}" class="btn btn-primary">View Qrcode</a></td>
                             </tr>
                         @endforeach
                     </tbody>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\jenis;
+use App\Models\truk;
 use Illuminate\Http\Request;
 
 class JenisController extends Controller
@@ -13,6 +14,13 @@ class JenisController extends Controller
         $jeniss = Jenis::all();
 
         return view('admin.jenis.index', compact('jeniss'));
+    }
+    public function indexqrcode($id)
+    {
+        // Tampilkan semua jenis
+        $jeniss = truk::join('jeniss','jeniss.id','=','truks.id_jenis')->where('jeniss.id',$id);
+
+        return view('admin.jenis.qrcode', compact('jeniss'));
     }
 
     public function create()
@@ -33,7 +41,7 @@ class JenisController extends Controller
         Jenis::create($request->all());
 
         // Redirect dengan pesan sukses
-        return redirect()->route('admin.jenis.index')->with('success', 'Jenis berhasil ditambahkan');
+        return redirect('/admin/jenis')->with('success', 'Jenis berhasil ditambahkan');
     }
 
     public function show($id)
@@ -41,7 +49,7 @@ class JenisController extends Controller
         // Tampilkan detail jenis berdasarkan ID
         $jenis = Jenis::find($id);
 
-        return view('admin.jenis.show', compact('jenis'));
+        return view('admin.jenis.edit', compact('jenis'));
     }
 
     public function edit($id)
@@ -64,7 +72,7 @@ class JenisController extends Controller
         Jenis::where('id', $id)->update($request->except('_token', '_method'));
 
         // Redirect dengan pesan sukses
-        return redirect()->route('admin.jenis.index')->with('success', 'Jenis berhasil diperbarui');
+        return redirect('/admin/jenis')->with('success', 'Jenis berhasil diperbarui');
     }
 
     public function destroy($id)
@@ -73,6 +81,6 @@ class JenisController extends Controller
         Jenis::destroy($id);
 
         // Redirect dengan pesan sukses
-        return redirect()->route('admin.jenis.index')->with('success', 'Jenis berhasil dihapus');
+        return redirect('/admin/jenis')->with('success', 'Jenis berhasil dihapus');
     }
 }

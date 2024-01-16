@@ -103,14 +103,26 @@
               </li>
               
               <li class="nav-item">
-                <a class="nav-link" href="/client/permintaan">
-                  <span class="menu-title">Permintaan Solar</span>
+                <a class="nav-link" href="/admin/permintaan">
+                  <span class="menu-title">Rincian Permintaan Solar</span>
                   <i class="mdi mdi-contacts menu-icon"></i>
                 </a>
               </li>
               <li class="nav-item">
+                <a class="nav-link" href="/admin/jenis">
+                  <span class="menu-title">Jenis Truk</span>
+                  <i class="mdi mdi-format-list-bulleted menu-icon"></i>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/admin/truk">
+                  <span class="menu-title">Unit Truk</span>
+                  <i class="mdi mdi-format-list-bulleted menu-icon"></i>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a class="nav-link" href="/client/riwayat">
-                  <span class="menu-title">Riwayat</span>
+                  <span class="menu-title">Laporan</span>
                   <i class="mdi mdi-format-list-bulleted menu-icon"></i>
                 </a>
               </li>

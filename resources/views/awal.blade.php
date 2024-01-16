@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Purple Admin</title>
+    <title>Solarin</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="{{asset('assets')}}/assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="{{asset('assets')}}/assets/vendors/css/vendor.bundle.base.css">
@@ -38,7 +38,27 @@
             <h1 class="text-center btn btn-primary" onclick="login()">Pengisian Bahan Bakar</h1>
           </div>
     </div>
+    <h1>QR Code Scanner</h1>
+    <video id="preview"></video>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="http://localhost:8000/assets/instascan.min.js"></script>
+    {{-- <video id="preview"></video> --}}
+    <script type="text/javascript">
+      let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+      scanner.addListener('scan', function (content) {
+        console.log(content);
+      });
+      Instascan.Camera.getCameras().then(function (cameras) {
+        if (cameras.length > 0) {
+          scanner.start(cameras[0]);
+        } else {
+          console.error('No cameras found.');
+        }
+      }).catch(function (e) {
+        console.error(e);
+      });
+    </script>
+    
     <script>
         function login(){
             window.location.href="/login";
