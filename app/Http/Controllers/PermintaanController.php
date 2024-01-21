@@ -22,12 +22,14 @@ class PermintaanController extends Controller
         // dd($permintaan);
         return view('admin.permintaan.qrcode', compact('permintaan'));
     }
-    public function accpermintaan($id)
+    public function accpermintaan(Request $request,$id)
     {
         // Tampilkan semua jenis
-        $permintaan = permintaan::find($id)->update('status',);
+        // dd($id);
+        $permintaan = permintaan::where('kode_unit',$id)->where('status','pending')->update(['status'=>'acc','km_awal_gudang'=>$request->km_awal,'km_akhir_gudang'=>$request->km_akhir_gudang,'selisih_gudang'=>$request->selisih]);
+        // $permintaan = permintaan::find($id);
         // dd($permintaan);
-        return view('admin.permintaan.qrcode', compact('permintaan'));
+        return redirect('/admin/permintaan');
     }
     public function indexclient()
     {
@@ -53,6 +55,7 @@ class PermintaanController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request);
         // Validasi data input
         $request->validate([
             'tanggal' => 'required|date',
@@ -61,9 +64,13 @@ class PermintaanController extends Controller
             'km_awal' => 'required|numeric',
             'km_akhir' => 'required|numeric',
             'selisih' => 'required|numeric',
-            'rasio' => 'required|numeric',
+            'rasio' => 'required',
         ]);
-
+        $data=permintaan::where('kode_unit',$request->kode_unit)->where('status','pending')->count();
+        if($data>0){
+            // dd($data);
+            return redirect()->back();
+        }
         // Simpan data ke dalam database
         Permintaan::create($request->all());
 
@@ -71,12 +78,27 @@ class PermintaanController extends Controller
         return redirect('/client/riwayat')->with('success', 'Permintaan berhasil ditambahkan');
     }
 
-    public function show($id)
-    {
-        // Tampilkan detail permintaan berdasarkan ID
-        $permintaan = Permintaan::find($id);
+    // public function show($id)
+    // {
+    //     dd('sini');
+    //     // Tampilkan detail permintaan berdasarkan ID
+    //     $permintaan = Permintaan::find($id);
 
-        return view('admin.permintaan.show', compact('permintaan'));
+    //     return view('admin.permintaan.show', compact('permintaan'));
+    // }
+    public function permintaan(Request $request)
+    {
+        // dd($request->kodeUnit);
+        $data=permintaan::join('truks','truks.id','=','permintaans.kode_unit')->join('jenis','jenis.id','=','truks.id_jenis')->where('kode_unit',$request->kodeUnit)->where('status','pending')->get();
+        // dd($data);
+        // Tampilkan detail permintaan berdasarkan ID
+        // $permintaan = Permintaan::find($id);
+        if($data->count()<=0){
+            // dd('ok');
+            return redirect()->back()->with('error', 'Data tidak ditemukan');
+        }
+
+        return view('admin.bensin.index',compact('data'));
     }
 
     public function edit($id)

@@ -11,15 +11,15 @@ class TrukController extends Controller
     public function index()
     {
         // Tampilkan semua truk
-        $truks = Truk::all();
-
+        $truks = Truk::join('jenis','jenis.id','=','truks.id_jenis')->select('jenis.nama_kelompok','truks.*')->get();
+        // dd($truks);
         return view('admin.truk.index', compact('truks'));
     }
     public function indexqrcode($id)
     {
         // Tampilkan semua jenis
-        $jeniss = truk::join('jeniss','jeniss.id','=','truks.id_jenis')->where('jeniss.id',$id);
-
+        $jeniss = truk::join('jenis','jenis.id','=','truks.id_jenis')->where('jenis.id',$id)->get();
+        // dd($jeniss);
         return view('admin.truk.qrcode', compact('jeniss'));
     }
 
@@ -41,6 +41,10 @@ class TrukController extends Controller
         ]);
 
         // Simpan data ke dalam database
+        $data=Truk::where('nama_unit',$request->nama_unit)->count();
+        if($data>0){
+            return redirect()->back();
+        }
         Truk::create($request->all());
 
         // Redirect dengan pesan sukses

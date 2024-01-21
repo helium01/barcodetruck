@@ -9,7 +9,7 @@
             
               <div class="row">
                 <div class="container mt-5">
-                    <h2>Daftar Jenis</h2>
+                    <h2>Daftar Truk</h2>
             
                     <div id="qrcode" class="mx-auto d-block mt-5" align="center"></div>
                 </div>
@@ -20,16 +20,16 @@
             </div>
             <script>
                 document.addEventListener("DOMContentLoaded", function() {
-                    var qrCodeValue = "https://example.com"; // Ganti dengan URL atau data yang diinginkan
-            
+                    var qrCodeValue = {!!json_encode($jeniss)!!}
+                    var jsonString = JSON.stringify(qrCodeValue);
                     var qrcode = new QRCode(document.getElementById("qrcode"), {
-                        text: qrCodeValue,
+                        text: jsonString,
                         width: 300,
                         height: 300
                     });
             
                     // Tambahkan ikon setelah QR code dibuat
-                    qrcode.makeCode(qrCodeValue);
+                    qrcode.makeCode(jsonString);
             
                     // Tunggu sebentar agar QR code dapat dirender dengan baik
                     setTimeout(function() {

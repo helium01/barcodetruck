@@ -20,7 +20,7 @@
                     @foreach ($truks as $truk)
                         <tr>
                             <td>{{ $truk->id }}</td>
-                            <td>{{ $truk->id_jenis }}</td>
+                            <td>{{ $truk->nama_kelompok }}</td>
                             <td>{{ $truk->nama_unit }}</td>
                             <td>{{ $truk->deskripsi }}</td>
                             <td>

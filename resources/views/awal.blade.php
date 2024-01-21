@@ -38,8 +38,7 @@
             <h1 class="text-center btn btn-primary" onclick="login()">Pengisian Bahan Bakar</h1>
           </div>
     </div>
-    <h1>QR Code Scanner</h1>
-    <div id="reader" width="600px"></div>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     {{-- <script src="http://localhost:8000/assets/instascan.min.js"></script> --}}
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"> </script>

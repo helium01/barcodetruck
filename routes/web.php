@@ -34,5 +34,6 @@ Route::get('admin/jenis/qrcode/{id}', [JenisController::class,'indexqrcode']);
 Route::resource('admin/permintaan', PermintaanController::class);
 Route::get('admin/permintaan/qrcode/{id}', [PermintaanController::class,'indexqrcode']);
 Route::get('admin/permintaan/acc/{id}', [PermintaanController::class,'accpermintaan']);
+Route::get('admin/permintaan/show/data', [PermintaanController::class,'permintaan']);
 route::get('client/permintaan',[PermintaanController::class,'indexclient']);
 route::get('client/riwayat',[PermintaanController::class,'riwayatclient']);

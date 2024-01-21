@@ -68,7 +68,11 @@
                   <div class="form-group">
                     <label for="rasio">Rasio:</label>
                     <input type="number" class="form-control" id="rasio" name="rasio" required>
-                    <input type="hidden" class="form-control" id="rasio" name="status" required value="pending">
+                    <input type="hidden" class="form-control" name="status" required value="pending">
+                  </div>
+                  <div class="form-group">
+                    <label for="selisih">Total Permintaan:</label>
+                    <input type="text" class="form-control" id="total" name="total" required>
                   </div>
               
                   <!-- Tombol Submit -->
@@ -95,10 +99,24 @@
                       }
                       $('#selisih').val(selisih);
                   }
+                  function hitungTotal() {
+                      var selisih = parseFloat($('#selisih').val()) || 0;
+                      var rasio = parseFloat($('#rasio').val()) || 0;
+  
+                      // Hitung selisih dan atur nilai ke input Selisih
+                      var total = selisih / rasio;
+                      if (total<=0){
+                        total=0;
+                      }
+                      $('#total').val(total+ ' Liter');
+                  }
   
                   // Panggil fungsi hitungSelisih saat nilai KM Awal atau KM Akhir berubah
                   $('#km_awal, #km_akhir').on('input', function() {
                       hitungSelisih();
+                  });
+                  $('#rasio').on('input', function() {
+                      hitungTotal();
                   });
               });
           </script>
